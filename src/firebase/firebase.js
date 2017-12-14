@@ -13,32 +13,66 @@ firebase.initializeApp(config);
 
 const database = firebase.database();
 
-// update data
-database.ref('notes/-L0JR24oogioenze_dOu').update({
-    body: 'Buy Food'
+// child_removed
+database.ref('expenses').on('child_removed', (snapshot) => {
+    console.log(snapshot.key, snapshot.val());
 });
 
-// this is how firebase data should looks like
-database.ref('expenses').push({
-    description: 'A',
-    note: 'Note A',
-    amount: 1,
-    createdAt: 2017
+// child_changed
+database.ref('expenses').on('child_changed', (snapshot) => {
+    console.log(snapshot.key, snapshot.val());
 });
 
-database.ref('expenses').push({
-    description: 'B',
-    note: 'Note B',
-    amount: 2,
-    createdAt: 2018
+// child_added
+database.ref('expenses').on('child_added', (snapshot) => {
+    console.log(snapshot.key, snapshot.val());
 });
 
-database.ref('expenses').push({
-    description: 'C',
-    note: 'Note C',
-    amount: 3,
-    createdAt: 2019
-});
+
+// database.ref('expenses')
+//     .once('value')
+//     .then((snapshot) => {
+//         const expenses = [];
+
+//         snapshot.forEach((childSnapshot) => {
+//             expenses.push({
+//                 id: childSnapshot.key,
+//                 ...childSnapshot.val()
+//             });
+//         });
+//         console.log(expenses);
+//     });
+
+// database.ref('expenses').on('value', (snapshot) => {
+//     const expenses = [];
+//         snapshot.forEach((childSnapshot) => {
+//             expenses.push({
+//                 id: childSnapshot.key,
+//                 ...childSnapshot.val()
+//             });
+//         });
+//         console.log(expenses);
+// })
+
+
+//update data
+// database.ref('notes/-L0JR24oogioenze_dOu').update({
+//     body: 'Buy Food'
+// });
+
+// database.ref('expenses').push({
+//     description: 'A',
+//     note: 'Note A',
+//     amount: 1,
+//     createdAt: 2017
+// });
+
+// database.ref('expenses').push({
+//     description: 'B',
+//     note: 'Note B',
+//     amount: 2,
+//     createdAt: 2018
+// });
 
 // database.ref('notes').push({
 //     title: 'C',
